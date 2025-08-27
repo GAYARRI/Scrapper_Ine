@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crew-html-extractor"
+version = "0.1.0"
+description = "CrewAI agent and tools to fetch raw or rendered HTML from a URL."
+authors = [{name = "Your Name", email = "you@example.com"}]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "crewai>=0.60",
+  "pydantic>=2",
+  "pydantic-settings>=2",
+  "requests>=2",
+  "tenacity>=8"
+]
+
+[project.optional-dependencies]
+playwright = ["playwright>=1.45"]
+
+[project.scripts]
+crew-html-extractor = "crew_html_extractor.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
