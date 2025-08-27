@@ -1,21 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Crawl del sitio con filtros (.es / es_es), JSON por página, MD por página (obligatorio) y MD combinado final.
-
-- Descarga/lee HTML (usa html_fetcher.fetch_html si existe; si no, fallback).
-- Parsea con extractor.parse_landing_html.
-- Adjunta agrupación de enlaces (por host y URL normalizada) dentro del JSON.
-- Guarda JSON y (opcional) HTML crudo.
-- Genera SIEMPRE un Markdown por página con presenter.render_report.
-- Al final, genera un MD combinado (índice + páginas + agregados site-wide).
-
-Uso:
-    python main_site_filtered.py --site https://tu-dominio.com --max-pages 150 --combined-md reports/tu-dominio.com.md
-
-Filtros:
-    --only-host-suffixes ".es"            # dominios permitidos (CSV)
-    --only-url-contains "es_es,es-es,/es/" # subcadenas permitidas en la ruta (CSV)
-    --filter-mode any|all                 # OR/AND entre grupos (por defecto any)
+Crawl del sitio SIN filtros de dominio/idioma (se eliminan restricciones).
 
 Requisitos:
     pip install beautifulsoup4 lxml
@@ -166,22 +151,9 @@ def parse_csv_list(val: Optional[str]) -> List[str]:
     return [x.strip().lower() for x in val.split(",") if x.strip()]
 
 def url_passes_filters(url: str, host_suffixes: List[str], contains: List[str], mode: str = "any") -> bool:
-    try:
-        p = urlparse(url)
-        host = (p.netloc or "").lower()
-        path = (p.path or "").lower()
+    """Filtro desactivado: siempre permite la URL."""
+    return True
 
-        checks: List[bool] = []
-        if host_suffixes:
-            checks.append(any(host.endswith(suf) for suf in host_suffixes))
-        if contains:
-            checks.append(any(sub in path for sub in contains))
-
-        if not checks:
-            return True
-        return any(checks) if mode == "any" else all(checks)
-    except Exception:
-        return True
 
 def normalize_url(base: str, href: str, allow_query: bool) -> Optional[str]:
     if not href:
@@ -469,7 +441,7 @@ def crawl_site(
 # ---------------- Argumentos y main ----------------
 
 def parse_args(argv: List[str]) -> argparse.Namespace:
-    ap = argparse.ArgumentParser(description="Crawl sitio (.es / es_es), JSON por página, MD por página y combinado")
+    ap = argparse.ArgumentParser(description="Crawl sitio sin filtros de dominio/idioma, JSON por página, MD por página y combinado")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--site", type=str, help="URL inicial del sitio a crawlear")
     g.add_argument("--urls", nargs="+", help="Una o más URLs")
@@ -493,9 +465,9 @@ def parse_args(argv: List[str]) -> argparse.Namespace:
     ap.add_argument("--no-sitemap-first", action="store_true", help="No usar sitemap como semilla inicial")
     ap.add_argument("--combined-md", type=str, default=None, help="Ruta del informe combinado final (por defecto reports/<host>.md)")
 
-    # Filtros (por defecto: .es O que la ruta contenga es_es)
-    ap.add_argument("--only-host-suffixes", type=str, default=".es", help="Sufijos de host permitidos (CSV)")
-    ap.add_argument("--only-url-contains", type=str, default="es_es", help="Subcadenas permitidas en la ruta (CSV)")
+    # Filtros desactivados (no se aplican restricciones de dominio/idioma)
+    ap.add_argument("--only-host-suffixes", type=str, default="", help="(Desactivado) Sufijos de host permitidos (CSV)")
+    ap.add_argument("--only-url-contains", type=str, default="", help="(Desactivado) Subcadenas permitidas en la ruta (CSV)")
     ap.add_argument("--filter-mode", type=str, choices=["any", "all"], default="any", help="Combinar filtros con OR ('any') o AND ('all')")
 
     return ap.parse_args(argv)

@@ -437,16 +437,16 @@ def process_file(in_path: Path, out_dir: Path, limit_paragraphs: int, max_col_wi
 
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="Renderiza informes Markdown desde JSON del extractor (y combinado opcional)")
-    ap.add_argument("--input", type=str, help="Ruta a un JSON concreto")
-    ap.add_argument("--glob", type=str, help='Patrón glob para múltiples JSON (p.ej., "data/parsed/*.json")')
-    ap.add_argument("--out", type=str, default="reports", help="Directorio de salida de informes .md por página")
-    ap.add_argument("--limit-paragraphs", type=int, default=50)
-    ap.add_argument("--max-col-width", type=int, default=100)
-    ap.add_argument("--combine", type=str, help="Ruta del MD combinado (p.ej., reports/site.md)")
-    ap.add_argument("--no-per-page", action="store_true", help="No generar MD por página; sólo combinado")
-    ap.add_argument("--dedupe-min-len", type=int, default=40, help="Longitud mínima de párrafos a deduplicar en combinado")
-    ap.add_argument("--max-agg-links", type=int, default=2000, help="Máximo de enlaces únicos listados en agregados")
-    ap.add_argument("--max-gallery", type=int, default=200, help="Máximo de imágenes en galería agregada")
+    #ap.add_argument("--input", type=str, help="Ruta a un JSON concreto")
+    #ap.add_argument("--glob", type=str, help='Patrón glob para múltiples JSON (p.ej., "data/parsed/*.json")')
+    #ap.add_argument("--out", type=str, default="reports", help="Directorio de salida de informes .md por página")
+    #ap.add_argument("--limit-paragraphs", type=int, default=50)
+    #ap.add_argument("--max-col-width", type=int, default=100)
+    #ap.add_argument("--combine", type=str, help="Ruta del MD combinado (p.ej., reports/site.md)")
+    #ap.add_argument("--no-per-page", action="store_true", help="No generar MD por página; sólo combinado")
+    #ap.add_argument("--dedupe-min-len", type=int, default=40, help="Longitud mínima de párrafos a deduplicar en combinado")
+    #ap.add_argument("--max-agg-links", type=int, default=2000, help="Máximo de enlaces únicos listados en agregados")
+    #ap.add_argument("--max-gallery", type=int, default=200, help="Máximo de imágenes en galería agregada")
     args = ap.parse_args(argv)
 
     # entradas
