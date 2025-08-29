@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crewai-html-extractor"
+version = "0.1.0"
+description = "Extractor de tablas HTML y endpoints para INE y sitios similares"
+readme = "README.md"
+requires-python = ">=3.9"
+# (Opcional) Si prefieres requirements.txt, puedes omitir 'dependencies'
+dependencies = [
+    "pandas",
+    "lxml",
+    "beautifulsoup4",
+    "requests",
+    "python-dateutil",
+    "tenacity",
+    "pyarrow"
+]
+
+[tool.setuptools]
+# indica que el código está en la raíz (flat layout)
+package-dir = {"" = "."}
+
+# Limita qué paquetes descubrir
+[tool.setuptools.packages.find]
+include = ["crewai_html_extractor*"]
+exclude = ["outputs*", "tests*", "examples*", "docs*"]
+
+[project.scripts]
+crewai-extract = "crewai_html_extractor.demo_cli:main"
+crewai-crawl   = "crewai_html_extractor.crawl_cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+include = ["crewai_html_extractor*"]
+exclude = ["src/crew_html_extractor*", "build*", "dist*", "Descarga*", "*egg-info*", "tests*", "notebooks*", "outputs*"]
+

@@ -1,0 +1,14 @@
+**/.venv/
+**/venv/
+**/_venv_tmp/
+**/__pycache__/
+**/.ipynb_checkpoints/
+**/.http_cache/
+**/*.pyc
+outputs/
+Descarga/
+build/
+dist/
+*.egg-info/
+*.zip
+resp.text
