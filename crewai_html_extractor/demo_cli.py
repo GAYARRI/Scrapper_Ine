@@ -38,44 +38,32 @@ def _dump_csv_tables(items: List[Dict[str, Any]], outdir: Path) -> int:
 
 
 def _export_entities(items: List[Dict[str, Any]], outdir: Path) -> int:
-    """Exporta items type='entity' a entities.csv. Devuelve el número exportado."""
     entities = [it for it in items if it.get("type") == "entity"]
     if not entities:
         return 0
 
-    # Normaliza 'same_as' (lista) a string separada por ';'
+    # normaliza same_as
     for e in entities:
         if isinstance(e.get("same_as"), list):
             e["same_as"] = ";".join(map(str, e["same_as"]))
-
-        # Asegura presencia de todas las claves más comunes
-        for k in (
-            "entity_type", "name", "legal_name", "description",
-            "tourism_license", "cif_nif", "url", "same_as",
-            "telephone", "email", "price_range", "rating", "rating_count",
-            "address_street", "address_locality", "address_region",
-            "address_postal_code", "address_country", "lat", "lon",
-            "checkin", "checkout", "event_start", "event_end", "confidence"
-        ):
+        for k in ("segment","subtype","segment_source","segment_score"):
             e.setdefault(k, None)
 
     df = pd.DataFrame(entities)
-    # Orden sugerido de columnas
-    cols_pref = [
-        "entity_type", "name", "legal_name", "description",
-        "tourism_license", "cif_nif",
-        "telephone", "email", "url", "same_as",
-        "address_street", "address_locality", "address_region",
-        "address_postal_code", "address_country",
-        "lat", "lon", "price_range", "rating", "rating_count",
-        "checkin", "checkout", "event_start", "event_end",
-        "confidence"
-    ]
-    cols = [c for c in cols_pref if c in df.columns] + [c for c in df.columns if c not in cols_pref]
-    df = df.loc[:, cols]
     df.to_csv(outdir / "entities.csv", index=False)
-    return len(df)
 
+    # 👉 Nuevos exports por segmento
+    if "segment" in df.columns:
+        segs = {
+            "accommodation": "accommodations.csv",
+            "experience": "experiences.csv",
+            "business": "businesses.csv",
+        }
+        for seg, fname in segs.items():
+            sdf = df[df["segment"] == seg]
+            if not sdf.empty:
+                sdf.to_csv(outdir / fname, index=False)
+    return len(df)
 
 def _export_long(items: List[Dict[str, Any]], source_url: str, outdir: Path, to_parquet: bool = False) -> Optional[Path]:
     """Convierte tablas a formato largo y exporta long.csv (+ opcional long.parquet)."""

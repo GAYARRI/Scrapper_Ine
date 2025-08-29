@@ -1,0 +1,74 @@
+{
+  "url": "https://turisme.vinaros.es/es/servicios/restauracion",
+  "extracted_at": "2025-08-29T12:09:26.666571",
+  "data_items": [
+    {
+      "type": "table",
+      "label": "ine_table_0_0",
+      "schema": [
+        "Unnamed: 0_level_0 / Unnamed: 0_level_1",
+        "Síguenos en: Twitter / Síguenos en: Facebook"
+      ],
+      "data": [
+        [
+          NaN,
+          "Síguenos en: Instagram"
+        ],
+        [
+          NaN,
+          "Síguenos en: YouTube"
+        ]
+      ],
+      "unit": null,
+      "source": {
+        "method": "html-ine",
+        "url": "https://turisme.vinaros.es/es/servicios/restauracion"
+      },
+      "confidence": 0.99,
+      "period": null
+    },
+    {
+      "type": "table",
+      "label": "rrss",
+      "schema": [
+        "0",
+        "1"
+      ],
+      "data": [
+        [
+          NaN,
+          "Síguenos en: Twitter"
+        ],
+        [
+          NaN,
+          "Síguenos en: Facebook"
+        ],
+        [
+          NaN,
+          "Síguenos en: Instagram"
+        ],
+        [
+          NaN,
+          "Síguenos en: YouTube"
+        ]
+      ],
+      "unit": null,
+      "source": {
+        "method": "html",
+        "selector": "table",
+        "url": "https://turisme.vinaros.es/es/servicios/restauracion"
+      },
+      "confidence": 0.98
+    }
+  ],
+  "meta": {
+    "method_chain": [
+      "fetch",
+      "tourism-jsonld",
+      "ine-html",
+      "html-tables"
+    ],
+    "count": 2,
+    "source_url": "https://turisme.vinaros.es/es/servicios/restauracion"
+  }
+}
