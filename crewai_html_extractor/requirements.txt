@@ -1,0 +1,13 @@
+# Core scraping
+requests
+beautifulsoup4
+lxml
+pandas
+tldextract
+
+# Opcionales (actívalos cuando uses extractores avanzados)
+# playwright          # para capturar XHR/JSON/CSV de gráficos
+# pdfplumber          # extracción de tablas en PDFs vectoriales
+# camelot-py[cv]      # alternativa para tablas en PDFs
+# paddleocr           # OCR de tablas/imágenes
+# layoutparser[layoutmodels,tesseract]   # detección de estructuras en OCR
